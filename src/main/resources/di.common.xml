@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd"
+       default-lazy-init="true">
+
+    <!-- controller -->
+
+    <bean id="createOfferController"
+          class="co.tide.announcementapi.controller.ApplicationController"
+          autowire="constructor">
+    </bean>
+
+
+    <!-- domain -->
+
+    <!-- domain.behaviour -->
+
+    <bean id="announcementRatingAnalyzer"
+          class="co.tide.announcementapi.domain.analyzer.AnnouncementRatingAnalyzer"
+          autowire="constructor"/>
+
+    <!-- domain.entity -->
+
+    <bean id="announcementFromParameterFactory"
+          class="co.tide.announcementapi.domain.entity.AnnouncementFromParameterFactory"
+          autowire="constructor"/>
+
+
+    <!-- infrastructure -->
+
+    <!-- infrastructure.memory -->
+
+    <bean id="inMemoryAnnouncementRatingStore"
+          class="co.tide.announcementapi.infrastructure.memory.InMemoryAnnouncementRatingStore"
+          autowire="constructor">
+    </bean>
+
+    <!-- infrastructure.sparkjava -->
+
+    <bean id="sparkJavaRoutingManager"
+          class="co.tide.announcementapi.infrastructure.sparkjava.SparkJavaRoutingManager"
+          autowire="constructor">
+        <constructor-arg name="httpServerPort" type="int" value="${http.server.port}"/>
+    </bean>
+
+    <bean id="jsonResponseTransformer"
+          class="co.tide.announcementapi.infrastructure.sparkjava.JsonResponseTransformer"
+          autowire="constructor"/>
+
+</beans>
